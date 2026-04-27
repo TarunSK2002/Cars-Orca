@@ -1,6 +1,6 @@
 // Countdown Timer Logic
-const launchDate = new Date();
-launchDate.setDate(launchDate.getDate() + 5); // Set launch date to 30 days from now
+// Set a fixed target date so it doesn't reset on refresh
+const launchDate = new Date('May 2, 2026 00:00:00').getTime();
 
 function updateCountdown() {
     const now = new Date().getTime();
