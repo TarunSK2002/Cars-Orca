@@ -212,7 +212,7 @@
         <div class="container text-center">
             <p class="mb-1">&copy; {{ date('Y') }} <span class="glow-text fw-bold">Cars Orca</span>. All rights reserved.</p>
             <p class="small text-muted mb-0">Financial Advisor: <a href="https://tideorca.com" target="_blank" class="text-decoration-none text-info">tideorca.com</a></p>
-            <p class="small text-muted mt-2 mb-0">Designed & Maintained by <span class="text-white">Tarun SK</span></p>
+            <p class="small text-muted mt-2 mb-0">Designed & Maintained by <a href="https://tarun.tideorca.com/" target="_blank" class="text-decoration-none text-info">Tarun SK</a></p>
         </div>
     </footer>
 
