@@ -5,8 +5,8 @@ on:
     branches:
       - main
   schedule:
-    # Runs at 4:30 AM UTC every day, which is 10:00 AM IST.
-    - cron: '30 4 * * *'
+    # Runs at 4:30 AM UTC on May 2nd (today at 10:00 AM IST).
+    - cron: '30 4 2 5 *'
 
 jobs:
   deploy:
