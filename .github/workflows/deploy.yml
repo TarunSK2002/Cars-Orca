@@ -12,12 +12,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Executing remote ssh commands using ssh key
+    - name: Executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
+        password: ${{ secrets.SSH_PASSWORD }}
         port: 22
         script: |
           cd /var/www/f6810204-9b35-4d33-9ea4-e6a9ac482b72/carsorca.com
