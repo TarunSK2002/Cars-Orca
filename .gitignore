@@ -1,0 +1,7 @@
+.ssh_keys/
+*.zip
+.vscode/
+Backend/
+Client/
+php/
+plan.txt

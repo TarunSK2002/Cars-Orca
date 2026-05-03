@@ -8,6 +8,7 @@ use App\Models\CarCondition;
 use App\Models\CarDocument;
 use App\Models\CarImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class CarController extends Controller
@@ -79,7 +80,7 @@ class CarController extends Controller
         // Save Images
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
-                $path = $image->store('cars', 'public');
+                $path = $this->storeCarImage($image);
                 CarImage::create([
                     'car_id' => $car->id,
                     'image_path' => $path,
@@ -161,7 +162,7 @@ class CarController extends Controller
             foreach ($request->delete_images as $imageId) {
                 $img = CarImage::find($imageId);
                 if ($img) {
-                    Storage::disk('public')->delete($img->image_path);
+                    $this->deleteCarImage($img->image_path);
                     $img->delete();
                 }
             }
@@ -171,7 +172,7 @@ class CarController extends Controller
         if ($request->hasFile('images')) {
             $lastSort = $car->images()->max('sort_order') ?? -1;
             foreach ($request->file('images') as $index => $image) {
-                $path = $image->store('cars', 'public');
+                $path = $this->storeCarImage($image);
                 CarImage::create([
                     'car_id' => $car->id,
                     'image_path' => $path,
@@ -189,11 +190,31 @@ class CarController extends Controller
 
         // Delete images from storage
         foreach ($car->images as $image) {
-            Storage::disk('public')->delete($image->image_path);
+            $this->deleteCarImage($image->image_path);
         }
 
         $car->delete();
 
         return redirect()->route('admin.cars.index')->with('success', 'Car listing deleted successfully!');
+    }
+
+    private function storeCarImage($image): string
+    {
+        $directory = public_path('storage/cars');
+
+        if (!File::exists($directory)) {
+            File::makeDirectory($directory, 0755, true);
+        }
+
+        $filename = $image->hashName();
+        $image->move($directory, $filename);
+
+        return 'cars/' . $filename;
+    }
+
+    private function deleteCarImage(string $path): void
+    {
+        File::delete(public_path('storage/' . ltrim($path, '/')));
+        Storage::disk('public')->delete($path);
     }
 }
